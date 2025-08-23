@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme='dark'>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S-Tube || A Social Media Platform</title>
+    <!-- Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <!-- Navbar Starts -->
+    <nav class=" w-11/12 mx-auto flex justify-between items-center py-3 border-b">
+        <div class="w-[50px]" id="logo"><img class="rounded-md" src="./Logo.png" alt="Logo.png"></div>
+        <div id="search"><label class="input input-secondary">
+                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                        stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input type="search" class="grow" placeholder="Search" />
+            </label></div>
+        <div id="sort"><button class="btn btn-secondary">SORT</button></div>
+    </nav>
+    <!-- Navbar end -->
+    <!-- Categories starts -->
+     <section class="categories-container flex justify-center py-3">
+        <div class=" flex gap-5" id="categories"></div>
+     </section>
+    <!-- Categories end -->
+
+    <!-- script -->
+    <script src="./script/script.js"></script>
+</body>
+
+</html>
