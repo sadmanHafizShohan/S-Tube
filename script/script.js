@@ -5,11 +5,24 @@ const loadCategories = () => {
     .then((data) => displayCategories(data.categories))
     .catch((error) => console.log(error));
 };
+// remove active class from all buttons
+const removeActiveClass = () => {
+  const buttons = document.getElementsByClassName("category-btn");
+  for (const btn of buttons) {
+    btn.classList.remove("bg-secondary");
+  }
+}
 // fetch video by category
 const loadVideosByCategory = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json())
-    .then((data) => displayVideos(data.category))
+    .then((data) => {
+      removeActiveClass();
+      const activeBtn = document.getElementById(`btn-${id}`);
+      activeBtn.classList.add("bg-secondary", "text-white");
+      console.log(activeBtn);
+      displayVideos(data.category)
+    })
     .catch((error) => console.log(error));
 };
 
@@ -19,7 +32,7 @@ const displayCategories = (categories) => {
   categories.forEach((item) => {
     const categoryContainer = document.createElement("div");
     categoryContainer.innerHTML =`
-    <button onclick = "loadVideosByCategory(${item.category_id})" class="btn btn-outline btn-secondary">
+    <button id="btn-${item.category_id}" onclick = "loadVideosByCategory(${item.category_id})" class="btn btn-outline btn-secondary category-btn">
       ${item.category}
     </button>
     `
