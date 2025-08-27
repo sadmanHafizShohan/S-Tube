@@ -28,19 +28,34 @@
     </nav>
     <!-- Navbar end -->
     <!-- Categories starts -->
-     <section class="categories-container flex justify-center py-3">
+    <section class="categories-container flex justify-center py-3">
         <div class=" flex gap-5" id="categories"></div>
-     </section>
+    </section>
     <!-- Categories end -->
-     <!-- main section starts -->
-      <main>
+    <!-- main section starts -->
+    <main>
         <!-- video section starts -->
-         <section id="video-container" class="w-11/12 mx-auto py-5">
+        <section id="video-container" class="w-11/12 mx-auto py-5">
             <div id="video" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
-         </section>
+        </section>
         <!-- video section end -->
-      </main>
-     <!-- main section end -->
+    </main>
+    <!-- main section end -->
+    <!-- modal section start -->
+    <!-- Open the modal using ID.showModal() method -->
+    <button class="btn hidden" onclick="modal.showModal()">open modal</button>
+    <dialog id="modal" class="modal modal-bottom sm:modal-middle">
+        <div id="modal-content" class="modal-box">
+           
+            </div>
+                <form method="dialog" class="modal-backdrop">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button>Close</button>
+                </form>
+         
+       
+    </dialog>
+    <!-- modal section end -->
     <!-- script -->
     <script src="./script/script.js"></script>
 </body>

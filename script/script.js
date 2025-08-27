@@ -11,7 +11,7 @@ const removeActiveClass = () => {
   for (const btn of buttons) {
     btn.classList.remove("bg-secondary");
   }
-}
+};
 // fetch video by category
 const loadVideosByCategory = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
@@ -21,7 +21,7 @@ const loadVideosByCategory = (id) => {
       const activeBtn = document.getElementById(`btn-${id}`);
       activeBtn.classList.add("bg-secondary", "text-white");
       console.log(activeBtn);
-      displayVideos(data.category)
+      displayVideos(data.category);
     })
     .catch((error) => console.log(error));
 };
@@ -31,11 +31,11 @@ const displayCategories = (categories) => {
   const category = document.getElementById("categories");
   categories.forEach((item) => {
     const categoryContainer = document.createElement("div");
-    categoryContainer.innerHTML =`
+    categoryContainer.innerHTML = `
     <button id="btn-${item.category_id}" onclick = "loadVideosByCategory(${item.category_id})" class="btn btn-outline btn-secondary category-btn">
       ${item.category}
     </button>
-    `
+    `;
     category.append(categoryContainer);
   });
 };
@@ -54,24 +54,37 @@ function convertTime(time) {
   remainingSecond = remainingSecond % 60;
   return `${hour} hour ${minute} minute ${remainingSecond} second ago`;
 }
-
+// open detail modal
+const openModal = async (videoId) => {
+  // console.log(videoId)
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data.video);
+  document.getElementById("modal").showModal();
+  const modalContent = document.getElementById("modal-content");
+  modalContent.innerHTML = `
+  <img src = "${data.video.thumbnail}"/>
+<p>${data.video.description}</p>
+`;
+};
 // display video on ui
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video");
   videoContainer.innerHTML = "";
-  if(videos.length === 0){
-    videoContainer.classList.remove("grid")
-    videoContainer.innerHTML = 
-    `
+  if (videos.length === 0) {
+    videoContainer.classList.remove("grid");
+    videoContainer.innerHTML = `
     <div class = "flex flex-col justify-center items-center gap-4">
       <img src = "icon.png" />
       <h2 class = "text-3xl font-bold text-center">No videos found</h2>
     </div>
-    `
-  }else{
-    videoContainer.classList.add("grid")
+    `;
+  } else {
+    videoContainer.classList.add("grid");
   }
   videos.forEach((video) => {
+    // console.log(video)
     const cart = document.createElement("div");
     cart.classList = "card card-compact";
     cart.innerHTML = `<figure class="h-[200px] relative">
@@ -82,7 +95,9 @@ const displayVideos = (videos) => {
       ${
         video.others.posted_date?.length === 0
           ? ""
-          : `<span class="absolute bg-black rounded text-white right-2 bottom-2 p-1">${convertTime(video.others.posted_date)}</span>`
+          : `<span class="absolute bg-black rounded text-white right-2 bottom-2 p-1">${convertTime(
+              video.others.posted_date
+            )}</span>`
       }
   </figure>
   <div class="px-0 py-2  flex gap-2">
@@ -101,7 +116,12 @@ const displayVideos = (videos) => {
                 : ""
             }
         </div>
-        <p>${video.others.views} views</p>
+        <div class = "flex justify-around items-center gap-5 mt-2">
+            <p>${video.others.views} views</p>
+            <button id = "${video.video_id}" onclick="openModal('${
+      video.video_id
+    }')" class="btn btn-sm btn-error">Details</button>
+        </div>
     </div>
   </div>`;
     videoContainer.append(cart);
