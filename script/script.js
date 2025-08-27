@@ -42,6 +42,14 @@ const loadVideos = () => {
 //     "description": "'Beyond The Pale' by Jim Gaffigan, with 2.6K views, is a comedic gem that explores everyday observations and family life with a light-hearted and witty approach. Jim's humor is accessible and delightful, making this show perfect for anyone who enjoys clean, observational comedy."
 // }
 //display video
+function convertTime(time) {
+  const hour = parseInt(time / 3600);
+  let remainingSecond = time % 60;
+  const minute = parseInt(remainingSecond / 60);
+  remainingSecond = remainingSecond % 60;
+  return `${hour} hour ${minute} minute ${remainingSecond} second ago`;
+}
+
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video");
   videos.forEach((video) => {
@@ -53,17 +61,27 @@ const displayVideos = (videos) => {
       src= ${video.thumbnail}
       class = "h-full w-full object-cover"
       alt="thumbnail" />
-      ${video.others.posted_date?.length === 0 ? "" : `<span class="absolute bg-black rounded text-white right-2 bottom-2 p-1">${video.others.posted_date}</span>` }
+      ${
+        video.others.posted_date?.length === 0
+          ? ""
+          : `<span class="absolute bg-black rounded text-white right-2 bottom-2 p-1">${convertTime(video.others.posted_date)}</span>`
+      }
   </figure>
   <div class="px-0 py-2  flex gap-2">
     <div>
-        <img class = "w-10 h-10 rounded-full object-cover" src = ${video.authors[0].profile_picture}>
+        <img class = "w-10 h-10 rounded-full object-cover" src = ${
+          video.authors[0].profile_picture
+        }>
     </div>
     <div>
         <h2 class = "font-bold">${video.title}</h2>
         <div class = "flex items-center gap-2">
             <p class = "text-gray-400">${video.authors[0].profile_name}</p>
-            ${video.authors[0].verified === true ? `<img class = "w-5 h-5" src="https://img.icons8.com/?size=100&id=D9RtvkuOe31p&format=png&color=000000"/>` : ""}
+            ${
+              video.authors[0].verified === true
+                ? `<img class = "w-5 h-5" src="https://img.icons8.com/?size=100&id=D9RtvkuOe31p&format=png&color=000000"/>`
+                : ""
+            }
         </div>
         <p>${video.others.views} views</p>
     </div>
