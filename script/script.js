@@ -5,15 +5,25 @@ const loadCategories = () => {
     .then((data) => displayCategories(data.categories))
     .catch((error) => console.log(error));
 };
+// fetch video by category
+const loadVideosByCategory = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category))
+    .catch((error) => console.log(error));
+};
+
 // display category buttons
 const displayCategories = (categories) => {
   const category = document.getElementById("categories");
   categories.forEach((item) => {
-    const categoryButton = document.createElement("button");
-    categoryButton.classList = "btn btn-outline btn-secondary";
-    categoryButton.innerText = item.category;
-
-    category.append(categoryButton);
+    const categoryContainer = document.createElement("div");
+    categoryContainer.innerHTML =`
+    <button onclick = "loadVideosByCategory(${item.category_id})" class="btn btn-outline btn-secondary">
+      ${item.category}
+    </button>
+    `
+    category.append(categoryContainer);
   });
 };
 //fetch videos
@@ -23,25 +33,7 @@ const loadVideos = () => {
     .then((data) => displayVideos(data.videos))
     .catch((error) => console.log(error));
 };
-// {
-//     "category_id": "1003",
-//     "video_id": "aaak",
-//     "thumbnail": "https://i.ibb.co/ZNggzdm/cake.jpg",
-//     "title": "Beyond The Pale",
-//     "authors": [
-//         {
-//             "profile_picture": "https://i.ibb.co/MZ2vbXR/jimm.jpg",
-//             "profile_name": "Jim Gaffigan",
-//             "verified": false
-//         }
-//     ],
-//     "others": {
-//         "views": "2.6K",
-//         "posted_date": "15400"
-//     },
-//     "description": "'Beyond The Pale' by Jim Gaffigan, with 2.6K views, is a comedic gem that explores everyday observations and family life with a light-hearted and witty approach. Jim's humor is accessible and delightful, making this show perfect for anyone who enjoys clean, observational comedy."
-// }
-//display video
+// converted posted time
 function convertTime(time) {
   const hour = parseInt(time / 3600);
   let remainingSecond = time % 60;
@@ -50,10 +42,11 @@ function convertTime(time) {
   return `${hour} hour ${minute} minute ${remainingSecond} second ago`;
 }
 
+// display video on ui
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video");
+  videoContainer.innerHTML = "";
   videos.forEach((video) => {
-    console.log(video);
     const cart = document.createElement("div");
     cart.classList = "card card-compact";
     cart.innerHTML = `<figure class="h-[200px] relative">
