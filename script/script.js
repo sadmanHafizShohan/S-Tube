@@ -46,6 +46,18 @@ function convertTime(time) {
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video");
   videoContainer.innerHTML = "";
+  if(videos.length === 0){
+    videoContainer.classList.remove("grid")
+    videoContainer.innerHTML = 
+    `
+    <div class = "flex flex-col justify-center items-center gap-4">
+      <img src = "icon.png" />
+      <h2 class = "text-3xl font-bold text-center">No videos found</h2>
+    </div>
+    `
+  }else{
+    videoContainer.classList.add("grid")
+  }
   videos.forEach((video) => {
     const cart = document.createElement("div");
     cart.classList = "card card-compact";
